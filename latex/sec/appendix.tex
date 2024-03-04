@@ -1,0 +1,182 @@
+\clearpage
+\chapter*{APPENDIX}
+\addcontentsline{toc}{chapter}{APPENDIX}
+
+\section{API Documentation}
+
+Moodle's Web Services Application Programming Interface (API) allows external systems to perform operations that are normally only accessible from within a Moodle site. This guide will show you how to create an external service in Moodle, how to generate a token for the service, and how to call the service with a POST request from outside the Moodle system. We will create an external service that can be used to assign users to roles in various contexts throughout the Moodle site.
+
+\textbf{Steps}
+\begin{enumerate}
+    \item Create an external service
+    \item Add functions to the service
+    \item Assign role to user
+    \item Obtain an access token
+    \item Call the API from an external service
+\end{enumerate}
+
+
+To access the external service you created earlier, you need to send a POST request to the appropriate uniform resource locator (URL) for your Moodle site. The URL format is:
+
+\href{https://<your-domain-name>/webservice/rest/server.php}{https://<your-domain-name>/webservice/rest/server.php}
+
+The necessary parameters are:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|p{0.7\linewidth}|}
+        \hline
+        \textbf{Parameter} & \textbf{Value} \\
+        \hline
+        wstoken & The token you copied from earlier \\
+        \hline
+        wsfunction & The name of the function you want to perform, e.g. "core\_role\_assign\_roles" \\
+        \hline
+        moodlewsrestformat & The format you want the results in. Options are "json" or "xml" \\
+        \hline
+    \end{tabular}
+    \caption{Request Parameters}
+    \label{tab:request-params}
+\end{table}
+
+
+\clearpage
+\section{Plugin Documentation}
+
+\subsection{RESTful Protocol}
+A REStful webservice plugin for Moodle LMS
+
+This plugin allows Moodle's webservice interface to operate in a more RESTFul way.
+Instead of each webservice call having a URL query parameter define what webservice function to use, webservice functions are made available by discrete URLS.
+
+This makes it easier to integrate Moodle with modern interfaces that expect a RESTful interface from other systems.
+
+This plugin also supports sending requests to Moodle webservices using the JSON format.
+
+Finally, by default all Moodle webservice requests return the HTTP status code of 200 regardless of the success or failure of the call. This plugin will return 4XX series status codes if calls are malformed, missing data or unauthorised. This allows external services communicating with Moodle to determine the success or failure of a webservice call without the need to parse the body of the response.
+
+\textbf{Moodle Webservice Setup}\\
+Follow these instructions if you do not currently have any webservies enabled and/or unfamiliar with Moodle webservices.
+
+There are several steps required to setup and enable webservices in Moodle, these are covered in the Moodle documentation that can be found at: \href{https://docs.moodle.org/34/en/Using_web_services}{https://docs.moodle.org/34/en/Using\_web\_services}
+
+It is recommended you read through these instructions first before attempting Moodle webservice Setup.\\
+
+\textbf{Sample Webservice Calls}\\
+Below are several examples of how to structure requests using the cURL command line tool.
+
+\textbf{JSON Request}
+
+The following example uses the core\_course\_get\_courses webservice function to get the course with id 6. The request sent to Moodle and the response received back are both in JSON format.
+
+To use the below example against an actual Moodle instance:
+
+Replace the {token} variable (including braces) with a valid Moodle authorisation token.
+Relace localhost in the URL in the example with the domain of the Moodle instance you want to use.
+
+\begin{minted}[breaklines=true]{bash}
+curl -X POST \
+-H "Content-Type: application/json" \
+-H "Accept: application/json" \
+-H 'Authorization: {token}' \
+-d'{"options": {"ids":[6]}}' \
+"https://localhost/webservice/restful/server.php/ core_course_get_courses"
+\end{minted}
+
+\textbf{XML Request}
+
+The following example uses the core\_course\_get\_courses webservice function to get the course with id 6. The request sent to Moodle and the response received back are both in XML format.
+
+To use the below example against an actual Moodle instance:
+
+Replace the {token} variable (including braces) with a valid Moodle authorisation token.
+Relace localhost in the URL in the example with the domain of the Moodle instance you want to use.
+
+\begin{minted}[breaklines=true]{bash}
+curl -X POST \
+-H "Content-Type: application/xml" \
+-H "Accept: application/xml" \
+-H 'Authorization: {token}' \
+-d'
+<root>
+   <options>
+      <ids>
+         <element>6</element>
+      </ids>
+   </options>
+</root>' \
+"https://localhost/webservice/restful/server.php/ core_course_get_courses"
+\end{minted}
+
+\textbf{REST / Form Request}
+
+The following example uses the core\_course\_get\_courses webservice function to get the course with id 6. The request sent to Moodle is in REST format and the response received back is in JSON format.
+
+NOTE: This plugin can only accept requests in REST format. Responses must be in JSON or XML format.
+
+To use the below example against an actual Moodle instance:
+
+Replace the {token} variable (including braces) with a valid Moodle authorisation token.
+Relace localhost in the URL in the example with the domain of the Moodle instance you want to use.
+
+\begin{minted}[breaklines=true]{bash}
+curl -X POST \
+-H "Content-Type: application/x-www-form-urlencoded" \
+-H "Accept: application/json" \
+-H 'Authorization: {token}' \
+-d'options[ids][0]=6' \
+"https://localhost/webservice/restful/server.php/ core_course_get_courses"
+\end{minted}
+
+\subsection{Moodle Auth UserKey}
+Auth plugin for organising simple one way SSO(single sign on) between moodle and your external web application. The main idea is to make a web call to moodle and provide one of the possible matching fields to find required user and generate one time login URL. A user can be redirected to this URL to be log in to Moodle without typing username and password.
+
+\textbf{Example Client}\\
+The code below defines a function that can be used to obtain a login url. You will need to add/remove parameters depending on whether you have update/create user enabled and which mapping field you are using.
+
+\begin{minted}[breaklines=true, startinline]{php}
+function getloginurl($useremail, $firstname, $lastname, $username, $courseid = null, $modname = null, $activityid = null) {
+    require_once('curl.php');
+        
+    $token        = 'YOUR_TOKEN';
+    $domainname   = 'http://MOODLE_WWW_ROOT';
+    $functionname = 'auth_userkey_request_login_url';
+
+    $param = [
+        'user' => [
+            'firstname' => $firstname, // You will not need this parameter, if you are not creating/updating users
+            'lastname'  => $lastname, // You will not need this parameter, if you are not creating/updating users
+            'username'  => $username, 
+            'email'     => $useremail,
+        ]
+    ];
+
+    $serverurl = $domainname . '/webservice/rest/server.php' . '?wstoken=' . $token . '&wsfunction=' . $functionname . '&moodlewsrestformat=json';
+    $curl = new curl; // The required library curl can be obtained from https://github.com/moodlehq/sample-ws-clients 
+
+    try {
+        $resp     = $curl->post($serverurl, $param);
+        $resp     = json_decode($resp);
+        if ($resp && !empty($resp->loginurl)) {
+            $loginurl = $resp->loginurl;        
+        }
+    } catch (Exception $ex) {
+        return false;
+    }
+
+    if (!isset($loginurl)) {
+        return false;
+    }
+
+    $path = '';
+    if (isset($courseid)) {
+        $path = '&wantsurl=' . urlencode("$domainname/course/view.php?id=$courseid");
+    }
+    if (isset($modname) && isset($activityid)) {
+        $path = '&wantsurl=' . urlencode("$domainname/mod/$modname/view.php?id=$activityid");
+    }
+
+    return $loginurl . $path;
+}
+
+echo getloginurl('barrywhite@googlemail.com', 'barry', 'white', 'barrywhite', 2, 'certificate', 8);
+\end{minted}

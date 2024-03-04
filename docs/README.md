@@ -1,0 +1,25 @@
+# LMS Integration with Namaste BHU
+
+## Table of Contents
+
+1. [Introduction](INTRODUCTION.md)
+    * [Background](INTRODUCTION.md#background)
+    * [Motivation](INTRODUCTION.md#motivation)
+    * [Consideration during Integration](INTRODUCTION.md#consideration-during-integration)
+2. [Literature Review](LITERATURE-REVIEW.md)
+    * [Learning Management System (LMS)](LITERATURE-REVIEW.md#learning-management-system-lms)
+    * [System Design and Architecture](LITERATURE-REVIEW.md#system-design-and-architecture)
+3. [Proposed Work and Methodology](METHODOLOGY.md)
+    * [Current Architecture](METHODOLOGY.md#current-architecture)
+    * [Possible Solutions](METHODOLOGY.md#possible-solutions)
+    * [Why Moodle?](METHODOLOGY.md#why-moodle)
+    * [Moodle Architecture](METHODOLOGY.md#moodle-architecture)
+    * [Proposed Architecture](METHODOLOGY.md#proposed-architecture)
+4. [Implementation](IMPLEMENTATION.md)
+    * [Overview](IMPLEMENTATION.md#overview)
+    * [Moodle Deployment](IMPLEMENTATION.md#moodle-deployment)
+    * [Plugins & Extension](IMPLEMENTATION.md#plugins--extension)
+    * [Seamless Integration](IMPLEMENTATION.md#seamless-integration)
+5. [Results and Discussions](RESULT.md)
+6. [Conclusion](CONCLUSION.md)
+    * [Future Directions](CONCLUSION.md#future-directions)
