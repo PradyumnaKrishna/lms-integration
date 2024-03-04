@@ -12,7 +12,7 @@ The proposed architecture for the integration of Moodle with the Namaste BHU app
 
 ![Proposed Architecture](assets/img/proposed-arch.jpg)
 
-Read more about the proposed architecture in the [paper](PAPER.md#proposed-architecture).
+Read more about the proposed architecture in the [paper](docs/METHODOLOGY.md#proposed-architecture).
 
 ## Project Report
 
