@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+title: LMS Integration with Namaste BHU
+message: "If you find this project useful, please consider citing it as:"
+type: software
+authors:
+  - given-names: Pradyumna
+    family-names: Krishna
+url: 'https://github.com/PradyumnaKrishna/lms-integration'

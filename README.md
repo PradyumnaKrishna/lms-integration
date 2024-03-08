@@ -18,6 +18,18 @@ Read more about the proposed architecture in the [paper](docs/METHODOLOGY.md#pro
 
 The detailed report for the project can be found [here](docs) or view complete PDF [here](paper.pdf).
 
+## CITATION
+
+If you find this project useful, please consider citing it as:
+
+```
+@software{PyKr2024,
+  author = {Krishna, Pradyumna},
+  title = {{LMS Integration with Namaste BHU}},
+  url = {https://github.com/PradyumnaKrishna/lms-integration},
+}
+```
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
