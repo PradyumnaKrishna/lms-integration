@@ -20,11 +20,15 @@ Read more about the proposed architecture in the [paper](docs/METHODOLOGY.md#pro
 
 Demonstration of the login process using Single Sign-On (SSO) between the Namaste BHU application and Moodle:
 
+https://github.com/PradyumnaKrishna/lms-integration/assets/51270439/cc2ecfeb-81c4-41f8-9abf-8ef8a11c619a
+
 Source: [demo/moodle_login.mp4](demo/moodle_login.mp4)
 
 ### Moodle Access
 
 Demonstration of accessing Moodle content by redirecting from the Namaste BHU application to Moodle app using deep linking:
+
+https://github.com/PradyumnaKrishna/lms-integration/assets/51270439/9edc2b38-b08c-460f-b38b-b1145bdeace2
 
 Source: [demo/moodle_access.mp4](demo/moodle_access.mp4)
 
