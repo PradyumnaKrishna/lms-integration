@@ -14,6 +14,20 @@ The proposed architecture for the integration of Moodle with the Namaste BHU app
 
 Read more about the proposed architecture in the [paper](docs/METHODOLOGY.md#proposed-architecture).
 
+## Demo
+
+### Login Demo
+
+Demonstration of the login process using Single Sign-On (SSO) between the Namaste BHU application and Moodle:
+
+Source: [demo/moodle_login.mp4](demo/moodle_login.mp4)
+
+### Moodle Access
+
+Demonstration of accessing Moodle content by redirecting from the Namaste BHU application to Moodle app using deep linking:
+
+Source: [demo/moodle_access.mp4](demo/moodle_access.mp4)
+
 ## Project Report
 
 The detailed report for the project can be found [here](docs) or view complete PDF [here](paper.pdf).
